@@ -1,11 +1,6 @@
 <template>
-  <div class="main-container" :style="{ width: width }">
-    <div class="burger-nav" :class="{ closed: !openNav }">
-      <slot name="burger-nav">
-        <button class="burger-btn" @click="openNav = !openNav" :class="{ open: openNav }"></button>
-      </slot>
-    </div>
-    <transition name="slide">
+  <div class="main-container">
+    <div class="menu-container" :class="{ closed: !openNav }">
       <div class="side-bar-container" v-if="openNav">
         <div class="side-bar-content">
           <div v-for="item in items" :key="item.route">
@@ -13,7 +8,12 @@
           </div>
         </div>
       </div>
-    </transition>
+    </div>
+    <div class="burger-nav">
+      <slot name="burger-nav">
+        <button class="burger-btn" @click="openNav = !openNav" :class="{ open: openNav }"></button>
+      </slot>
+    </div>
   </div>
 </template>
 
