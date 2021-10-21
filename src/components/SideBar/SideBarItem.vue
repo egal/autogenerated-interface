@@ -4,23 +4,13 @@
     <div class="item-icon"></div>
     <div>
       {{ item.label }}
-      <slot name="arrow-btn">
-        <!--      <button-->
-        <!--        class="arrow-icon"-->
-        <!--        v-if="item.children"-->
-        <!--        @click="childrenOpen = !childrenOpen"-->
-        <!--        :class="{ open: childrenOpen }"-->
-        <!--      >-->
-        <!--        <span class="left-bar"></span>-->
-        <!--        <span class="right-bar"></span>-->
-        <!--      </button>-->
-      </slot>
+      <slot name="arrow-btn"> </slot>
     </div>
   </div>
-  <div v-if="item.children && childrenOpen">
+  <div v-if="item.children && childrenOpen" class="children-container">
     <transition name=" list">
       <div>
-        <div class="children-container" v-for="child in item.children" :key="child.route">
+        <div class="children-content" v-for="child in item.children" :key="child.route">
           <div>{{ child.icon }}</div>
           <div>{{ child.label }}</div>
         </div>

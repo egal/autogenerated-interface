@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container">
-    <div class="burger-nav">
+  <div class="main-container" :style="{ width: width }">
+    <div class="burger-nav" :class="{ closed: !openNav }">
       <slot name="burger-nav">
         <button class="burger-btn" @click="openNav = !openNav" :class="{ open: openNav }"></button>
       </slot>
