@@ -1,3 +1,5 @@
+@import 'sidebarVariables';
+
 .main-container {
   display: flex;
 }
@@ -9,9 +11,11 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+  //position: absolute;
+  z-index: 1;
   padding-top: 60px;
   font-size: 1.2rem;
-  animation: 0.5s out-in forwards;
+  //animation: 0.5s out-in forwards;
   .side-bar-container {
     width: 100%;
   }
@@ -35,6 +39,11 @@
 
 .item-content {
   padding: 15px 24px;
+  display: flex;
+  align-items: center;
+  .item-icon {
+    margin-right: 10px;
+  }
 }
 
 .children-content {
@@ -42,13 +51,8 @@
 }
 
 .item-content:hover {
-  color: #571bc1;
+  color: $main-accent;
 }
-$buttonWidth: 32px;
-$lineHeight: 3px;
-$buttonHeight: 20px;
-$vertPadding: 10px;
-$horizontalPadding: 20px;
 
 .burger-btn {
   background: none;
@@ -56,16 +60,17 @@ $horizontalPadding: 20px;
   margin: auto;
   border: none;
   position: relative;
-  width: $buttonWidth;
-  height: $buttonHeight;
-  padding: $vertPadding $horizontalPadding;
+  width: $button-width;
+  height: $button-height;
+  padding: $vertical-padding $horizontal-padding;
   box-sizing: content-box;
+  cursor: pointer;
 
   &::before,
   &::after {
     content: '';
-    width: $buttonWidth;
-    height: $lineHeight;
+    width: $button-width;
+    height: $line-height;
     background: #1a202c;
     display: block;
     position: absolute;
@@ -74,17 +79,17 @@ $horizontalPadding: 20px;
   }
 
   &::before {
-    top: $vertPadding;
+    top: $vertical-padding;
   }
 
   &::after {
-    top: calc(100% - #{$lineHeight + $vertPadding});
+    top: calc(100% - #{$line-height + $vertical-padding});
   }
   &.open {
     &::before,
     &::after {
       transition: transform 0.5s ease, top 0.2s ease 0.1s;
-      top: calc(50% - #{$lineHeight / 2});
+      top: calc(50% - #{$line-height / 2});
     }
 
     &::before {
@@ -108,6 +113,11 @@ $horizontalPadding: 20px;
   }
 }
 
+a:-webkit-any-link {
+  text-decoration: none;
+  color: $main-dark;
+}
+
 @keyframes in-out {
   0% {
     width: 260px;
@@ -123,9 +133,4 @@ $horizontalPadding: 20px;
   100% {
     width: 260px;
   }
-}
-
-a:-webkit-any-link {
-  text-decoration: none;
-  color: #1a202c;
 }

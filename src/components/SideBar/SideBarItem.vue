@@ -1,7 +1,9 @@
 <template>
   <router-link :to="item.route">
     <div class="item-content" @click="childrenOpen = !childrenOpen">
-      <div class="item-icon"></div>
+      <div class="item-icon">
+        <img :src="require(`../../assets/${item.icon}.png`)" :alt="item.label"/>
+      </div>
       <div>
         {{ item.label }}
         <slot name="arrow-btn"> </slot>

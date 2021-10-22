@@ -7,39 +7,39 @@ export const sidebarConfig = [
   {
     label: 'Simple Item',
     route: 'item',
-    icon: 'item',
+    icon: 'home',
   },
   {
     label: 'Nested Item',
     route: '',
-    icon: 'nested',
+    icon: 'home',
     children: [
       {
-        label: 'Child 1',
+        label: 'Child nested item',
         route: '',
-        icon: '',
+        icon: 'home',
         children: [
           {
             label: 'Child 1 2',
             route: 'childtwo',
-            icon: '',
+            icon: 'home',
           },
           {
             label: 'Child 1 3',
             route: 'childthree',
-            icon: '',
+            icon: 'home',
           },
         ],
       },
       {
         label: 'Child 2',
         route: 'childtwo',
-        icon: '',
+        icon: 'home',
       },
       {
         label: 'Child 3',
         route: 'childthree',
-        icon: '',
+        icon: 'home',
       },
     ],
   },

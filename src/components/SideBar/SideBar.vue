@@ -43,14 +43,10 @@ export default {
       type: String,
       default: 'left',
     },
-    width: {
-      type: String,
-      default: '260px',
-    },
   },
   data() {
     return {
-      openNav: false,
+      openNav: this.show,
     }
   },
 }
