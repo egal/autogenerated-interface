@@ -8,9 +8,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-wrap: wrap;
   padding-top: 60px;
   font-size: 1.2rem;
   animation: 0.5s out-in forwards;
+  .side-bar-container {
+    width: 100%;
+  }
 }
 
 .menu-container.closed {
@@ -23,15 +27,20 @@
 
 .item-content,
 .children-content {
-  display: grid;
-  grid-template-columns: 16px 1fr auto;
-  grid-column-gap: 20px;
   align-items: center;
   cursor: pointer;
-  padding: 20px 24px;
   transition: 0.2s;
   text-align: start;
 }
+
+.item-content {
+  padding: 15px 24px;
+}
+
+.children-content {
+  padding: 0 24px;
+}
+
 .item-content:hover {
   color: #571bc1;
 }
@@ -114,4 +123,9 @@ $horizontalPadding: 20px;
   100% {
     width: 260px;
   }
+}
+
+a:-webkit-any-link {
+  text-decoration: none;
+  color: #1a202c;
 }

@@ -11,13 +11,25 @@ export const sidebarConfig = [
   },
   {
     label: 'Nested Item',
-    route: 'nested',
+    route: '',
     icon: 'nested',
     children: [
       {
         label: 'Child 1',
-        route: 'childone',
+        route: '',
         icon: '',
+        children: [
+          {
+            label: 'Child 1 2',
+            route: 'childtwo',
+            icon: '',
+          },
+          {
+            label: 'Child 1 3',
+            route: 'childthree',
+            icon: '',
+          },
+        ],
       },
       {
         label: 'Child 2',
