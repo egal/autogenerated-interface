@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@egalteam/framework": "^2.0.0-beta40",
     "core-js": "^3.6.5",
     "v-calendar": "^2.3.4",
     "vue": "^3.0.0",

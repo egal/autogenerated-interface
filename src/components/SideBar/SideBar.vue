@@ -1,57 +1,63 @@
 <template>
-  <div class="main-container">
-    <div class="menu-container" :class="{ closed: !openNav }">
-      <div class="side-bar-container" v-if="openNav">
-        <div class="side-bar-content">
-          <div v-for="item in items" :key="item.route">
-            <SideBarItem :item="item"></SideBarItem>
-          </div>
-        </div>
+  <div class="sidebar">
+    <div class="logo-details">
+      <div class="logo_name">
+        <slot name="logo">{{ items.sidebarTitle }}</slot>
       </div>
-    </div>
-    <div class="burger-nav">
-      <slot name="burger-nav">
-        <button class="burger-btn" @click="openNav = !openNav" :class="{ open: openNav }"></button>
+      <slot name="burger-icon" v-if="!top">
+        <i class="bx bx-menu" id="btn" @click="openNav"></i>
       </slot>
     </div>
+    <ul class="nav-list">
+      <li v-for="item in items.sidebarItems" :key="item.route">
+        <SideBarItem :item="item"></SideBarItem>
+      </li>
+      <slot name="footer" v-if="!top">
+        <li class="footer-item">
+          <i class="bx bx-log-out" id="log_out"></i>
+        </li>
+      </slot>
+    </ul>
   </div>
 </template>
 
 <script>
 import SideBarItem from '@/components/SideBar/SideBarItem'
+
 export default {
-  name: 'SideBar',
+  name: 'test',
   components: { SideBarItem },
   props: {
     items: {
-      type: Array,
-      required: true,
-      default: () => [
-        {
-          label: String,
-          route: String,
-          icon: String,
-          children: Array | undefined,
-        },
-      ],
+      type: Object,
     },
-    show: {
+    right: {
       type: Boolean,
-      default: true,
+      default: false,
     },
-    position: {
-      type: String,
-      default: 'left',
+    left: {
+      type: Boolean,
+      default: false,
+    },
+    top: {
+      type: Boolean,
+      default: false,
     },
   },
-  data() {
-    return {
-      openNav: this.show,
-    }
+  mounted() {
+    this.left
+      ? import('./sidebarLeft.scss')
+      : this.right
+      ? import('./sidebarRight.scss')
+      : import('./sidebarTop.scss')
+  },
+  methods: {
+    openNav() {
+      let sidebar = document.querySelector('.sidebar')
+      sidebar.classList.toggle('open')
+    },
   },
 }
 </script>
 
-<style scoped lang="scss">
-@import 'sidebar';
-</style>
+<style scoped lang="scss"></style>

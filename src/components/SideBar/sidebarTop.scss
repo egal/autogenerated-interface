@@ -1,0 +1,155 @@
+@import 'sidebarVariables';
+@font-face {
+  font-family: Raleway;
+  src: url("../../assets/fonts/Raleway-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url("../../assets/fonts/Raleway-Medium.ttf");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url("../../assets/fonts/Raleway-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url("../../assets/fonts/Raleway-Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+
+a:-webkit-any-link {
+  text-decoration: none;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  height: 80px;
+  width: 100%;
+  background: $main-dark;
+  padding: 6px 24px;
+  z-index: 99;
+  transition: all 0.5s ease;
+  border-radius: 0 0 10px 10px;
+  font-family: Raleway, sans-serif;
+}
+.sidebar.open {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.sidebar .logo-details {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon {
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name {
+  color: $main-white;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.sidebar i {
+  color: $main-white;
+  height: 60px;
+  min-width: 40px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list {
+  display: flex;
+  justify-content: flex-end;
+}
+.sidebar li {
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+  font-weight: bold;
+}
+.sidebar li .tooltip {
+  position: absolute;
+  top: -20px;
+  right: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+  font-weight: bold;
+}
+.sidebar li:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  color: $main-dark;
+  border-radius: 5px 0 0 5px;
+}
+.sidebar.open li .tooltip {
+  display: none;
+}
+.sidebar li .item {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  //width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  font-weight: bold;
+  margin-left: 15px;
+  padding-right: 22px;
+}
+.sidebar li .item:hover {
+  background: $main-white;
+}
+.sidebar li .item .links_name {
+  color: $main-white;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li .item .links_name {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li .item:hover .links_name,
+.sidebar li .item:hover i {
+  transition: all 0.5s ease;
+  color: $main-dark;
+}
+.sidebar li i {
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.item-container {
+  width: 100%;
+}

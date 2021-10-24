@@ -1,46 +1,49 @@
-export const sidebarConfig = [
-  {
-    label: 'Home',
-    route: 'home',
-    icon: 'home',
-  },
-  {
-    label: 'Simple Item',
-    route: 'item',
-    icon: 'home',
-  },
-  {
-    label: 'Nested Item',
-    route: '',
-    icon: 'home',
-    children: [
-      {
-        label: 'Child nested item',
-        route: '',
-        icon: 'home',
-        children: [
-          {
-            label: 'Child 1 2',
-            route: 'childtwo',
-            icon: 'home',
-          },
-          {
-            label: 'Child 1 3',
-            route: 'childthree',
-            icon: 'home',
-          },
-        ],
-      },
-      {
-        label: 'Child 2',
-        route: 'childtwo',
-        icon: 'home',
-      },
-      {
-        label: 'Child 3',
-        route: 'childthree',
-        icon: 'home',
-      },
-    ],
-  },
-]
+export const sidebarConfig = {
+  sidebarTitle: 'Egal',
+  sidebarItems: [
+    {
+      label: 'Home',
+      route: 'home',
+      icon: 'bx bx-grid-alt',
+    },
+    {
+      label: 'Simple Item',
+      route: 'item',
+      icon: 'bx bx-user',
+    },
+    {
+      label: 'Nested Item',
+      route: '',
+      icon: 'bx bx-chat',
+      children: [
+        {
+          label: 'Child nested item',
+          route: '',
+          icon: 'bx bx-pie-chart-alt-2',
+          children: [
+            {
+              label: 'Child 1 2',
+              route: 'childtwo',
+              icon: 'bx bx-folder',
+            },
+            {
+              label: 'Child 1 3',
+              route: 'childthree',
+              icon: 'bx bx-cart-alt',
+            },
+          ],
+        },
+        {
+          label: 'Child 2',
+          route: 'childtwo',
+          icon: 'bx bx-heart',
+        },
+        {
+          label: 'Child 3',
+          route: 'childthree',
+          icon: 'bx bx-cog',
+        },
+      ],
+    },
+  ],
+}

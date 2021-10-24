@@ -1,18 +1,16 @@
 <template>
   <router-link :to="item.route">
-    <div class="item-content" @click="childrenOpen = !childrenOpen">
-      <div class="item-icon">
-        <img :src="require(`../../assets/${item.icon}.png`)" :alt="item.label"/>
+    <div class="item-container">
+      <div class="item" @click="childrenOpen = !childrenOpen">
+        <i :class="item.icon"></i>
+        <span class="links_name">{{ item.label }}</span>
+        <span class="tooltip">{{ item.label }}</span>
       </div>
-      <div>
-        {{ item.label }}
-        <slot name="arrow-btn"> </slot>
-      </div>
-    </div>
-    <div v-if="item.children && childrenOpen" class="children-container">
-      <div>
-        <div class="children-content" v-for="child in item.children" :key="child.route">
-          <SideBarItem :item="child"></SideBarItem>
+      <div v-if="item.children && childrenOpen" class="children-container">
+        <div>
+          <div class="children-content" v-for="child in item.children" :key="child.route">
+            <SideBarItem :item="child"></SideBarItem>
+          </div>
         </div>
       </div>
     </div>
@@ -22,6 +20,11 @@
 <script>
 export default {
   name: 'SideBarItem',
+  data() {
+    return {
+      childrenOpen: false,
+    }
+  },
   props: {
     item: {
       type: Object,
@@ -33,15 +36,7 @@ export default {
       }),
     },
   },
-  data() {
-    return {
-      childrenOpen: false,
-    }
-  },
-  methods: {},
 }
 </script>
 
-<style scoped lang="scss">
-@import 'sidebar';
-</style>
+<style scoped lang="scss"></style>

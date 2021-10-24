@@ -1,10 +1,20 @@
 <template>
-  <div id="nav"></div>
+  <SideBar :items="sidebarItems" top></SideBar>
   <router-view />
 </template>
 <script>
+import { sidebarConfig } from '@/metadata/sidebar'
+import SideBar from "@/components/SideBar/SideBar";
 export default {
   name: 'App',
+  components: {
+    SideBar,
+  },
+  data() {
+    return {
+      sidebarItems: sidebarConfig,
+    }
+  },
 }
 </script>
 <style lang="scss">
