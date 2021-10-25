@@ -1,10 +1,11 @@
 <template>
-  <SideBar :items="sidebarItems" top></SideBar>
+  <SideBar :items="sidebarItems" :cssConfig="cssConfig" top></SideBar>
   <router-view />
 </template>
 <script>
 import { sidebarConfig } from '@/metadata/sidebar'
-import SideBar from "@/components/SideBar/SideBar";
+import { cssConfig } from '@/components/SideBar/cssConfig'
+import SideBar from '@/components/SideBar/SideBar'
 export default {
   name: 'App',
   components: {
@@ -13,6 +14,7 @@ export default {
   data() {
     return {
       sidebarItems: sidebarConfig,
+      cssConfig: cssConfig,
     }
   },
 }

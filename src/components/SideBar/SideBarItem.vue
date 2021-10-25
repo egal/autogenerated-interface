@@ -4,7 +4,7 @@
       <div class="item" @click="childrenOpen = !childrenOpen">
         <i :class="item.icon"></i>
         <span class="links_name">{{ item.label }}</span>
-        <span class="tooltip">{{ item.label }}</span>
+        <span class="tooltip" v-if="!hideTooltip">{{ item.label }}</span>
       </div>
       <div v-if="item.children && childrenOpen" class="children-container">
         <div>
@@ -34,6 +34,10 @@ export default {
         icon: '',
         children: [],
       }),
+    },
+    hideTooltip: {
+      type: Boolean,
+      default: false,
     },
   },
 }

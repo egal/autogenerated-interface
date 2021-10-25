@@ -1,28 +1,28 @@
 @import 'sidebarVariables';
 @font-face {
   font-family: Raleway;
-  src: url("../../assets/fonts/Raleway-Regular.ttf");
+  src: url('../../assets/fonts/Raleway-Regular.ttf');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url("../../assets/fonts/Raleway-Medium.ttf");
+  src: url('../../assets/fonts/Raleway-Medium.ttf');
   font-style: normal;
   font-weight: 500;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url("../../assets/fonts/Raleway-Bold.ttf");
+  src: url('../../assets/fonts/Raleway-Bold.ttf');
   font-style: normal;
   font-weight: bold;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url("../../assets/fonts/Raleway-Light.ttf");
+  src: url('../../assets/fonts/Raleway-Light.ttf');
   font-style: normal;
   font-weight: 300;
 }
@@ -32,10 +32,12 @@ a:-webkit-any-link {
 }
 .sidebar {
   position: fixed;
+  display: flex;
   top: 0;
+  justify-content: space-between;
   height: 80px;
   width: 100%;
-  background: $main-dark;
+  background: var(--dark-color);
   padding: 6px 24px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -57,14 +59,14 @@ a:-webkit-any-link {
   transition: all 0.5s ease;
 }
 .sidebar .logo-details .logo_name {
-  color: $main-white;
+  color: var(--white-color);
   font-size: 20px;
   font-weight: 600;
   transition: all 0.5s ease;
 }
 
 .sidebar i {
-  color: $main-white;
+  color: var(--white-color);
   height: 60px;
   min-width: 40px;
   font-size: 28px;
@@ -73,7 +75,8 @@ a:-webkit-any-link {
 }
 .sidebar .nav-list {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  width: 35%;
 }
 .sidebar li {
   position: relative;
@@ -97,16 +100,6 @@ a:-webkit-any-link {
   transition: 0s;
   font-weight: bold;
 }
-.sidebar li:hover .tooltip {
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  color: $main-dark;
-  border-radius: 5px 0 0 5px;
-}
 .sidebar.open li .tooltip {
   display: none;
 }
@@ -114,26 +107,25 @@ a:-webkit-any-link {
   display: flex;
   flex-direction: row;
   height: 100%;
-  //width: 100%;
   border-radius: 12px;
   align-items: center;
   text-decoration: none;
   transition: all 0.4s ease;
   font-weight: bold;
-  margin-left: 15px;
   padding-right: 22px;
 }
 .sidebar li .item:hover {
-  background: $main-white;
+  background: var(--white-color);
 }
 .sidebar li .item .links_name {
-  color: $main-white;
+  color: var(--white-color);
   font-size: 15px;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
+  font-weight: bold;
+  //white-space: nowrap;
   pointer-events: none;
   transition: 0.4s;
+  word-break: break-all;
+  text-align: left;
 }
 .sidebar.open li .item .links_name {
   opacity: 1;
@@ -142,7 +134,7 @@ a:-webkit-any-link {
 .sidebar li .item:hover .links_name,
 .sidebar li .item:hover i {
   transition: all 0.5s ease;
-  color: $main-dark;
+  color: var(--dark-color);
 }
 .sidebar li i {
   height: 50px;
@@ -152,4 +144,35 @@ a:-webkit-any-link {
 }
 .item-container {
   width: 100%;
+}
+.children-container {
+  background: var(--dark-color);
+  border-radius: 0 0 10px 10px;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.children-content {
+  min-height: 40px;
+  width: 90%;
+  margin: 10px auto;
+}
+.childItem {
+  margin-left: 0;
+}
+//.children-content:not(:first-child) {
+//  border-top: 1px solid var(--white-color)
+//}
+
+@media screen and (max-width: 1466px) {
+  .sidebar .nav-list {
+    width: 45%;
+  }
+}
+@media screen and (max-width: 1187px) {
+  .sidebar .nav-list {
+    width: 50%;
+  }
 }
