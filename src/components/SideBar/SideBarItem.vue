@@ -1,7 +1,7 @@
 <template>
   <router-link :to="item.route">
     <div class="item-container">
-      <div class="item" @click="childrenOpen = !childrenOpen">
+      <div class="item" @click="childrenOpen = !childrenOpen" >
         <i :class="item.icon"></i>
         <span class="links_name">{{ item.label }}</span>
         <span class="tooltip" v-if="!hideTooltip">{{ item.label }}</span>
@@ -40,6 +40,13 @@ export default {
       default: false,
     },
   },
+  created() {
+    window.addEventListener('click', (e) => {
+      if (!this.$el.contains(e.target)){
+        this.childrenOpen = false
+      }
+    })
+  }
 }
 </script>
 
