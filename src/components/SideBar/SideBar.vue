@@ -12,13 +12,18 @@
     </div>
     <ul class="nav-list">
       <li v-for="item in items.sidebarItems" :key="item.route">
-        <SideBarItem :item="item" :hide-tooltip="top"></SideBarItem>
+        <SideBarItem
+          :item="item"
+          :hide-tooltip="top"
+          :is-active="isActiveRoute(item.route)"
+        ></SideBarItem>
       </li>
-      <slot name="footer" v-if="!top">
-        <li class="footer-item">
+
+      <li class="footer-item" v-if="!top">
+        <slot name="footer">
           <i class="bx bx-log-out" id="log_out"></i>
-        </li>
-      </slot>
+        </slot>
+      </li>
     </ul>
   </div>
 </template>
@@ -62,10 +67,10 @@ export default {
   },
   mounted() {
     this.left
-      ? import('./sidebarLeft.scss')
+      ? import('./assets/sidebarLeft.scss')
       : this.right
-      ? import('./sidebarRight.scss')
-      : import('./sidebarTop.scss')
+      ? import('./assets/sidebarRight.scss')
+      : import('./assets/sidebarTop.scss')
   },
   computed: {
     cssVars() {
@@ -86,6 +91,13 @@ export default {
     openNav() {
       let sidebar = document.querySelector('.sidebar')
       sidebar.classList.toggle('open')
+    },
+    isActiveRoute(route) {
+      if (route === '/') {
+        return this.$route.path === route
+      } else {
+        return this.$route.path && this.$route.path.includes(route)
+      }
     },
   },
 }

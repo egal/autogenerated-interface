@@ -1,10 +1,17 @@
 <template>
-  <SideBar :items="sidebarItems" :cssConfig="cssConfig" top></SideBar>
+  <SideBar :items="sidebarItems" :cssConfig="cssConfig" left>
+    <!--    <template v-slot:logo>-->
+    <!--      <img :src="require('./assets/percent.svg')"/>-->
+    <!--    </template>-->
+    <!--    <template v-slot:footer>-->
+    <!--      <img :src="require('./assets/percent.svg')"/>-->
+    <!--    </template>-->
+  </SideBar>
   <router-view />
 </template>
 <script>
-import { sidebarConfig } from '@/metadata/sidebar'
-import { cssConfig } from '@/components/SideBar/cssConfig'
+import { sidebarConfig } from '@/components/SideBar/assets/sidebarMetadata'
+import { cssConfig } from '@/components/SideBar/assets/cssConfig'
 import SideBar from '@/components/SideBar/SideBar'
 export default {
   name: 'App',

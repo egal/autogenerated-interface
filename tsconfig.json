@@ -14,7 +14,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "@types/click-outside"
+      "@types"
     ],
     "paths": {
       "@/*": [

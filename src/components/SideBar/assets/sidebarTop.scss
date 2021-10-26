@@ -1,28 +1,28 @@
 @import 'sidebarVariables';
 @font-face {
   font-family: Raleway;
-  src: url('../../assets/fonts/Raleway-Regular.ttf');
+  src: url('../../../assets/fonts/Raleway-Regular.ttf');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url('../../assets/fonts/Raleway-Medium.ttf');
+  src: url('../../../assets/fonts/Raleway-Medium.ttf');
   font-style: normal;
   font-weight: 500;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url('../../assets/fonts/Raleway-Bold.ttf');
+  src: url('../../../assets/fonts/Raleway-Bold.ttf');
   font-style: normal;
   font-weight: bold;
 }
 
 @font-face {
   font-family: Raleway;
-  src: url('../../assets/fonts/Raleway-Light.ttf');
+  src: url('../../../assets/fonts/Raleway-Light.ttf');
   font-style: normal;
   font-weight: 300;
 }
@@ -73,6 +73,20 @@ a:-webkit-any-link {
   text-align: center;
   line-height: 60px;
 }
+i.arrow.down.bx.bxs-down-arrow {
+  font-size: 14px;
+  transform: rotate(0deg);
+  transition: transform 0.3s linear;
+}
+i.arrow.down.bx.bxs-down-arrow.arrowOpen {
+  transform: rotate(180deg);
+  transition: transform 0.3s linear;
+}
+
+i.arrow.down {
+  min-width: 25px;
+}
+
 .sidebar .nav-list {
   display: flex;
   justify-content: space-between;
@@ -113,6 +127,10 @@ a:-webkit-any-link {
   transition: all 0.4s ease;
   font-weight: bold;
   padding-right: 22px;
+  text-align: left;
+}
+.sidebar li .item.child-item {
+  padding-right: 0;
 }
 .sidebar li .item:hover {
   background: var(--white-color);
@@ -121,10 +139,10 @@ a:-webkit-any-link {
   color: var(--white-color);
   font-size: 15px;
   font-weight: bold;
-  //white-space: nowrap;
   pointer-events: none;
   transition: 0.4s;
   word-break: break-all;
+  hyphens: manual;
   text-align: left;
 }
 .sidebar.open li .item .links_name {
@@ -148,8 +166,8 @@ a:-webkit-any-link {
 .children-container {
   background: var(--dark-color);
   border-radius: 0 0 10px 10px;
-  min-width: 180px;
-  display: flex;
+  //min-width: 180px;
+  //display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -162,9 +180,8 @@ a:-webkit-any-link {
 .childItem {
   margin-left: 0;
 }
-//.children-content:not(:first-child) {
-//  border-top: 1px solid var(--white-color)
-//}
+.child-item {
+}
 
 @media screen and (max-width: 1466px) {
   .sidebar .nav-list {

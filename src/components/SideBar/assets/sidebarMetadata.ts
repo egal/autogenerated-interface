@@ -17,7 +17,7 @@ export const sidebarConfig = {
       icon: 'bx bx-chat',
       children: [
         {
-          label: 'Child nested itemfdsfdfs',
+          label: 'Child 1',
           route: '',
           icon: 'bx bx-pie-chart-alt-2',
           children: [
