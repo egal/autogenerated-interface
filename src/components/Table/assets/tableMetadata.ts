@@ -1,5 +1,4 @@
 export const tableMetadata = {
-  label: 'New Table',
   fields: {
     string_field: {
       label: 'string field',

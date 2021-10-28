@@ -14,8 +14,9 @@
       <li v-for="item in items.sidebarItems" :key="item.route">
         <SideBarItem
           :item="item"
-          :hide-tooltip="top"
+          :hide-tooltip="item.children ? true : top"
           :is-active="isActiveRoute(item.route)"
+          :is-open="isOpen"
         ></SideBarItem>
       </li>
 
@@ -53,17 +54,22 @@ export default {
     cssConfig: {
       type: Object,
       default: () => ({
-        mainDarkColor: '#081F4B',
+        mainDarkColor: '#2F3375',
         mainAccentColor: '#0083FF',
         mainLightColor: '#A1B2CE',
         mainWhiteColor: '#FFFEFF',
-        footerBackground: '#1d1b31',
+        footerBackground: '#1D1F49',
         iconWidth: 18,
         iconHeight: 18,
         boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)',
         sidebarBorderRadius: '0 10px 10px 0',
       }),
     },
+  },
+  data() {
+    return {
+      isOpen: false,
+    }
   },
   mounted() {
     this.left
@@ -91,6 +97,7 @@ export default {
     openNav() {
       let sidebar = document.querySelector('.sidebar')
       sidebar.classList.toggle('open')
+      this.isOpen = !this.isOpen
     },
     isActiveRoute(route) {
       if (route === '/') {

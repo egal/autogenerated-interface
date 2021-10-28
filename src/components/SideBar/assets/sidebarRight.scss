@@ -1,32 +1,4 @@
 @import 'sidebarVariables';
-@font-face {
-  font-family: Raleway;
-  src: url('../../../assets/fonts/Raleway-Regular.ttf');
-  font-style: normal;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: Raleway;
-  src: url('../../../assets/fonts/Raleway-Medium.ttf');
-  font-style: normal;
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: Raleway;
-  src: url('../../../assets/fonts/Raleway-Bold.ttf');
-  font-style: normal;
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: Raleway;
-  src: url('../../../assets/fonts/Raleway-Light.ttf');
-  font-style: normal;
-  font-weight: 300;
-}
-
 a:-webkit-any-link {
   text-decoration: none;
 }
@@ -98,7 +70,8 @@ a:-webkit-any-link {
   list-style: none;
   font-weight: bold;
 }
-.sidebar li .tooltip {
+.sidebar li .tooltip,
+.sidebar li .tooltip-expanded {
   position: absolute;
   top: -20px;
   right: calc(100% + 15px);
@@ -114,7 +87,8 @@ a:-webkit-any-link {
   transition: 0s;
   font-weight: bold;
 }
-.sidebar li:hover .tooltip {
+.sidebar li:hover .tooltip,
+.sidebar li:hover .tooltip-expanded {
   opacity: 1;
   pointer-events: auto;
   transition: all 0.4s ease;
@@ -124,8 +98,43 @@ a:-webkit-any-link {
   color: var(--dark-color);
   border-radius: 5px 0 0 5px;
 }
-.sidebar.open li .tooltip {
+.sidebar.open li .tooltip,
+.sidebar.open li .tooltip-expanded {
   display: none;
+}
+.sidebar li .tooltip-expanded {
+  min-width: 150px;
+  padding-left: 15px;
+  div {
+    min-height: 40px;
+    cursor: pointer;
+    color: var(--dark-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+    .nested-tooltip-items {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margn-right: 20px;
+      width: 100%;
+      height: 100%;
+    }
+    a:-webkit-any-link:hover {
+      color: var(--accent-colorr);
+    }
+    span {
+      line-height: 40px;
+    }
+  }
+  div:not(:first-child) {
+    border-top: 0.7px solid var(--light-color);
+  }
+  a:-webkit-any-link:hover {
+    color: var(--accent-colorr);
+  }
 }
 .sidebar li .item {
   display: flex;

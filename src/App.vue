@@ -3,25 +3,28 @@
     <!--    <template v-slot:logo>-->
     <!--      <img :src="require('./assets/percent.svg')"/>-->
     <!--    </template>-->
-    <!--    <template v-slot:footer>-->
-    <!--      <img :src="require('./assets/percent.svg')"/>-->
-    <!--    </template>-->
   </SideBar>
+  <Table :microserviceName="microserviceName" :modelName="modelName" :url="url"></Table>
   <router-view />
 </template>
 <script>
 import { sidebarConfig } from '@/components/SideBar/assets/sidebarMetadata'
 import { cssConfig } from '@/components/SideBar/assets/cssConfig'
 import SideBar from '@/components/SideBar/SideBar'
+import Table from '@/components/Table/Table'
 export default {
   name: 'App',
   components: {
     SideBar,
+    Table,
   },
   data() {
     return {
       sidebarItems: sidebarConfig,
       cssConfig: cssConfig,
+      microserviceName: 'monolit',
+      modelName: 'User',
+      url: 'url',
     }
   },
 }
@@ -33,10 +36,12 @@ export default {
   box-sizing: border-box;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Raleway, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #f0f6f9;
+  height: 100vh;
 }
 </style>
