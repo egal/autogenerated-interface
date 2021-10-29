@@ -1,11 +1,22 @@
 <template>
-  <div class="table-container" :style="cssVars">
+  <div :style="cssVars" :class="{ 'card-container': card, 'table-container': !card }">
     <div class="filter-container">
       <slot name="filters">
         <Filters></Filters>
       </slot>
     </div>
-    <div class="table-content">
+    <div class="view-switch-btn">
+      <div class="toggle-button-cover">
+        <div class="button-cover">
+          <div class="button r" id="button-3">
+            <input type="checkbox" class="checkbox" @input="checkboxToggle()" />
+            <div class="knobs"></div>
+            <div class="layer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-content" v-if="!card">
       <div class="table-header">
         <TableHeader :headers="table.tableData?.headers"></TableHeader>
       </div>
@@ -18,6 +29,11 @@
         <Pagination></Pagination>
       </div>
     </div>
+    <div v-if="card" class="cards-content">
+      <div v-for="item in table.tableData?.items" :key="item.id" class="card-content">
+        <TableCard :item="item"></TableCard>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -27,14 +43,15 @@ import TableRow from './TableRow'
 import Pagination from './Pagination'
 import TableHeader from './TableHeader'
 import { Table } from './assets/Table'
+import TableCard from '@/components/Table/TableCard'
 export default {
   name: 'Table',
-  components: { TableHeader, Pagination, TableRow, Filters },
+  components: { TableCard, TableHeader, Pagination, TableRow, Filters },
   props: {
-    card: {
-      type: Boolean,
-      default: false,
-    },
+    // card: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     microserviceName: {
       type: String,
       default: '',
@@ -51,7 +68,11 @@ export default {
       type: Object,
       default: () => ({
         mainDarkColor: '#2F3375',
+        lightSecondaryColor: '#dedffb',
         mainAccentColor: '#0083FF',
+        lightAccentColor: '#96ccff',
+        lightGrayColor: '#e3eaf6',
+        darkGrayColor: '#d3d8e1',
         mainLightColor: '#F0F6F9',
         mainWhiteColor: '#FFFEFF',
         footerBackground: '#2B199F',
@@ -67,6 +88,7 @@ export default {
     return {
       table: {},
       tableData: {},
+      card: false,
     }
   },
   mounted() {
@@ -77,6 +99,8 @@ export default {
     cssVars() {
       return {
         '--dark-color': this.cssConfig.mainDarkColor,
+        '--light-accent-color': this.cssConfig.lightAccentColor,
+        '--light-secondary-color': this.cssConfig.lightSecondaryColor,
         '--accent-color': this.cssConfig.mainAccentColor,
         '--light-color': this.cssConfig.mainLightColor,
         '--white-color': this.cssConfig.mainWhiteColor,
@@ -86,7 +110,14 @@ export default {
         '--icon-height': this.cssConfig.iconHeight,
         '--sidebar-border-radius': this.cssConfig.sidebarBorderRadius,
         '--header-color': this.cssConfig.headerColor,
+        '--light-gray-color': this.cssConfig.lightGrayColor,
+        '--dark-gray-color': this.cssConfig.darkGrayColor,
       }
+    },
+  },
+  methods: {
+    checkboxToggle() {
+      this.card = !this.card
     },
   },
 }

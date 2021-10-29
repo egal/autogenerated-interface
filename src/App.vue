@@ -4,7 +4,7 @@
     <!--      <img :src="require('./assets/percent.svg')"/>-->
     <!--    </template>-->
   </SideBar>
-  <Table :microserviceName="microserviceName" :modelName="modelName" :url="url"></Table>
+  <Table :microserviceName="microserviceName" :modelName="modelName" :url="url" card></Table>
   <router-view />
 </template>
 <script>
@@ -42,6 +42,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   background: #f0f6f9;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
 }
 </style>

@@ -1,7 +1,9 @@
 export const cssConfig = {
   mainDarkColor: '#2F3375',
   mainAccentColor: '#0083FF',
-  mainLightColor: '#A1B2CE',
+  lightSecondaryColor: '#cbcdfe',
+  lightAccentColor: '#96ccff',
+  mainLightColor: '#F0F6F9',
   mainWhiteColor: '#FFFEFF',
   footerBackground: '#1D1F49',
   iconWidth: 18,

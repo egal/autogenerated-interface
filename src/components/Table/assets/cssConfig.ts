@@ -1,6 +1,10 @@
 export const cssConfig = {
   mainDarkColor: '#2F3375',
   mainAccentColor: '#0083FF',
+  lightSecondaryColor: '#dedffb',
+  lightAccentColor: '#96ccff',
+  lightGrayColor: '#e3eaf6',
+  darkGrayColor: '#d3d8e1',
   mainLightColor: '#A1B2CE',
   mainWhiteColor: '#FFFEFF',
   footerBackground: '#2B199F',

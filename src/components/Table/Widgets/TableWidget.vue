@@ -11,13 +11,16 @@ export default {
       default: 'Text',
     },
     data: {
-      default: '',
+      type: Object,
+      default: undefined,
     },
   },
   computed: {
     component() {
       if (this.type === 'string' || this.type === 'number' || this.type === 'date') {
         return () => import(`./InputText`)
+      } else if (this.type === 'select') {
+        return () => import('../../Select/Select')
       }
       return () => import(`./InputText`)
     },
