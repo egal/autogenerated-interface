@@ -4,12 +4,19 @@
     <!--      <img :src="require('./assets/percent.svg')"/>-->
     <!--    </template>-->
   </SideBar>
-  <Table :microserviceName="microserviceName" :modelName="modelName" :url="url" card></Table>
+  <Table
+    :microserviceName="microserviceName"
+    :modelName="modelName"
+    :url="url"
+    :cssConfig="mainCssConfig"
+    card
+  ></Table>
   <router-view />
 </template>
 <script>
 import { sidebarConfig } from '@/components/SideBar/assets/sidebarMetadata'
 import { cssConfig } from '@/components/SideBar/assets/cssConfig'
+import { mainCssConfig } from '@/mainCssConfig'
 import SideBar from '@/components/SideBar/SideBar'
 import Table from '@/components/Table/Table'
 export default {
@@ -22,14 +29,17 @@ export default {
     return {
       sidebarItems: sidebarConfig,
       cssConfig: cssConfig,
+      mainCssConfig: mainCssConfig,
       microserviceName: 'monolit',
       modelName: 'User',
       url: 'url',
     }
   },
+  methods: {},
 }
 </script>
 <style lang="scss">
+@import 'components/Table/assets/tableStyles';
 * {
   margin: 0;
   padding: 0;

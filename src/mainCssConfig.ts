@@ -1,4 +1,4 @@
-export const cssConfig = {
+export const mainCssConfig = {
   mainDarkColor: '#2F3375',
   mainAccentColor: '#0083FF',
   lightSecondaryColor: '#dedffb',
@@ -13,4 +13,6 @@ export const cssConfig = {
   boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)',
   sidebarBorderRadius: '0 10px 10px 0',
   headerColor: '#688BB6',
+  boldBoxShadow: '0 4px 20px -2px rgba(50, 50, 71, 0.08)',
+  mainBorderRadius: '20px',
 }

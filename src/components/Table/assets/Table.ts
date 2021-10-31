@@ -39,9 +39,10 @@ export class Table {
     const fields = this.tableMetadata.fields as any
     this.tableData.items = this.tableItems
     Object.keys(fields).forEach((field: any, i: number) => {
-      this.tableData.headers.push(fields[field].label)
+      this.tableData.headers.push({ label: fields[field].label, sortable: fields[field].sortable })
       this.tableData.fields.push({
         key: field,
+        label: fields[field].label,
         type: fields[field].type,
       })
     })

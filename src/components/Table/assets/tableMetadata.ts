@@ -1,5 +1,10 @@
 export const tableMetadata = {
   fields: {
+    id_field: {
+      label: 'id field',
+      type: 'number',
+      sortable: true,
+    },
     string_field: {
       label: 'string field',
       type: 'string',

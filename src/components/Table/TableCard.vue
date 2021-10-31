@@ -1,6 +1,15 @@
 <template>
-  <div>
-    {{ item }}
+  <div class="card-items-container">
+    <div class="card-headers">
+      <div v-for="header in headers" :key="header.id">
+        {{ header.label }}
+      </div>
+    </div>
+    <div class="card-items">
+      <div v-for="cardItem in item" :key="cardItem.id">
+        {{ cardItem }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,7 +24,12 @@ export default {
       type: Object,
       default: undefined,
     },
+    headers: {
+      type: Object,
+      default: undefined,
+    },
   },
+  methods: {},
 }
 </script>
 
