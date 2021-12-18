@@ -26,20 +26,28 @@ export class Table {
 
   getTableMetadata() {
     this.tableMetadata = tableMetadata
-    this.getItems()
+    this.getItems([])
   }
-  getItems() {
+  getItems(order: any) {
     this.loading = true
     this.tableItems = items
+    const tableOrder = order
     if (this.tableMetadata && this.tableItems) {
       this.setTableData()
     }
   }
+
   setTableData() {
     const fields = this.tableMetadata.fields as any
     this.tableData.items = this.tableItems
     Object.keys(fields).forEach((field: any, i: number) => {
-      this.tableData.headers.push({ label: fields[field].label, sortable: fields[field].sortable })
+      console.log(field)
+      this.tableData.headers.push({
+        label: fields[field].label,
+        sortable: fields[field].sortable,
+        field: field,
+      })
+      console.log(this.tableData.headers)
       this.tableData.fields.push({
         key: field,
         label: fields[field].label,

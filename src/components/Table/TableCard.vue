@@ -28,6 +28,10 @@ export default {
       type: Object,
       default: undefined,
     },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {},
 }

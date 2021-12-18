@@ -12,7 +12,7 @@
           ></i>
         </div>
         <span class="tooltip" v-if="!hideTooltip && !item.children">{{ item.label }}</span>
-        <div class="tooltip-expanded" v-if="item.children">
+        <div class="tooltip-expanded" v-if="item.children && !top">
           <div v-for="item in item.children" :key="item.id">
             <span class="router-link">
               <router-link :to="item.route">{{ item.label }}</router-link>
@@ -66,6 +66,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    top: {
+      type: Boolean,
+      default: false
+    }
   },
   created() {
     window.addEventListener('click', (e) => {

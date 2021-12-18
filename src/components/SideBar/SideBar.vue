@@ -14,6 +14,7 @@
       <li v-for="item in items.sidebarItems" :key="item.route">
         <SideBarItem
           :item="item"
+          :top="top"
           :hide-tooltip="item.children ? true : top"
           :is-active="isActiveRoute(item.route)"
           :is-open="isOpen"
@@ -82,6 +83,8 @@ export default {
     cssVars() {
       return {
         '--dark-color': this.cssConfig.mainDarkColor,
+        '--light-accent-color': this.cssConfig.lightAccentColor,
+        '--light-secondary-color': this.cssConfig.lightSecondaryColor,
         '--accent-color': this.cssConfig.mainAccentColor,
         '--light-color': this.cssConfig.mainLightColor,
         '--white-color': this.cssConfig.mainWhiteColor,
@@ -90,6 +93,11 @@ export default {
         '--icon-width': this.cssConfig.iconWidth,
         '--icon-height': this.cssConfig.iconHeight,
         '--sidebar-border-radius': this.cssConfig.sidebarBorderRadius,
+        '--header-color': this.cssConfig.headerColor,
+        '--light-gray-color': this.cssConfig.lightGrayColor,
+        '--dark-gray-color': this.cssConfig.darkGrayColor,
+        '--bold-box-shadow': this.cssConfig.boldBoxShadow,
+        '--main-border-radius': this.cssConfig.mainBorderRadius,
       }
     },
   },

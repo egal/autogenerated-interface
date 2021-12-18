@@ -1,38 +1,43 @@
 <template>
-  <SideBar :items="sidebarItems" :cssConfig="cssConfig" left>
-    <!--    <template v-slot:logo>-->
-    <!--      <img :src="require('./assets/percent.svg')"/>-->
-    <!--    </template>-->
-  </SideBar>
+  <!--  <SideBar :items="sidebarItems" :cssConfig="mainCssConfig" left>-->
+  <!--    <template v-slot:logo>-->
+  <!--      <img :src="require('./assets/percent.svg')"/>-->
+  <!--    </template>-->
+  <!--  </SideBar>-->
   <Table
-    :microserviceName="microserviceName"
-    :modelName="modelName"
+    :microservice-name="microserviceName"
+    :model-name="modelName"
+    :metadata-action-name="metadataActionName"
+    :table-name="tableName"
     :url="url"
-    :cssConfig="mainCssConfig"
-    card
-  ></Table>
+    :css-config="mainCssConfig"
+  >
+    <template v-slot:modalContent>
+      <h1>Here might be a page title</h1>
+    </template>
+  </Table>
   <router-view />
 </template>
 <script>
 import { sidebarConfig } from '@/components/SideBar/assets/sidebarMetadata'
-import { cssConfig } from '@/components/SideBar/assets/cssConfig'
 import { mainCssConfig } from '@/mainCssConfig'
 import SideBar from '@/components/SideBar/SideBar'
 import Table from '@/components/Table/Table'
 export default {
   name: 'App',
   components: {
-    SideBar,
     Table,
+    // SideBar,
   },
   data() {
     return {
       sidebarItems: sidebarConfig,
-      cssConfig: cssConfig,
       mainCssConfig: mainCssConfig,
-      microserviceName: 'monolit',
+      microserviceName: 'first',
       modelName: 'User',
-      url: 'url',
+      url: process.env.VUE_APP_BASE_URL,
+      metadataActionName: 'getTablesMetadata',
+      tableName: 'UsersMetadata',
     }
   },
   methods: {},

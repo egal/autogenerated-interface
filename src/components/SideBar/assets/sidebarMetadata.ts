@@ -18,7 +18,7 @@ export const sidebarConfig = {
       children: [
         {
           label: 'Child 1',
-          route: '',
+          route: 'childnested',
           icon: 'bx bx-pie-chart-alt-2',
           children: [
             {
