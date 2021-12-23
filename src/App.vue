@@ -1,7 +1,7 @@
 <template>
-  <!--  <SideBar :items="sidebarItems" :cssConfig="mainCssConfig" left>-->
+  <!--  <SideBar :items="sidebarItems" :cssConfig="mainCssConfig" right>-->
   <!--    <template v-slot:logo>-->
-  <!--      <img :src="require('./assets/percent.svg')"/>-->
+  <!--      <img :src="require('./assets/percent.svg')" />-->
   <!--    </template>-->
   <!--  </SideBar>-->
   <Table
@@ -12,22 +12,21 @@
     :url="url"
     :css-config="mainCssConfig"
   >
-    <template v-slot:modalContent>
-      <h1>Here might be a page title</h1>
-    </template>
+    <!--    <template v-slot:modalContent>-->
+    <!--      <h1>hui</h1>-->
+    <!--    </template>-->
   </Table>
   <router-view />
 </template>
 <script>
 import { sidebarConfig } from '@/components/SideBar/assets/sidebarMetadata'
 import { mainCssConfig } from '@/mainCssConfig'
-import SideBar from '@/components/SideBar/SideBar'
 import Table from '@/components/Table/Table'
+import SideBar from '@/components/SideBar/SideBar'
 export default {
   name: 'App',
   components: {
     Table,
-    // SideBar,
   },
   data() {
     return {

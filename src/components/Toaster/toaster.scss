@@ -1,0 +1,67 @@
+@import 'src/assets/variables';
+.toaster-container {
+  .toaster-item {
+    transition: 0.3s ease-in-out;
+    position: fixed;
+    right: 1%;
+    top: 0;
+    z-index: 200;
+  }
+}
+@mixin toaster($variant: 'danger') {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  //display: grid;
+  //grid-template-columns: 48px 1fr 16px;
+  cursor: pointer;
+  //align-items: center;
+  //grid-column-gap: 16px;
+  padding: 16px;
+  background-color: map-get($dark-colors, $variant);
+  border-radius: 10px;
+  width: fit-content;
+  min-width: 480px;
+  min-height: 80px;
+  height: auto;
+  transform: translateY(10px);
+  animation: fadeInDown 0.2s ease-in-out;
+
+  .toaster-message {
+    color: white;
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: bold;
+  }
+  .toaster-close {
+    transform: translateY(1px);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.slide-leave-active,
+.slide-enter-active {
+  animation: fadeInDown;
+}
+
+.slide-leave-to {
+  animation: fadeOut 0.5s;
+}

@@ -14,13 +14,17 @@
 </template>
 
 <script>
+import { tableStore } from '@/storage/TableStore'
+
 export default {
   name: 'TableCard',
   data() {
-    return {}
+    return {
+      fields: tableStore.getState().tableData.fields,
+    }
   },
   props: {
-    item: {
+    cardItem: {
       type: Object,
       default: undefined,
     },

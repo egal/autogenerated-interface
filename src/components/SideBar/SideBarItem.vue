@@ -68,8 +68,8 @@ export default {
     },
     top: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   created() {
     window.addEventListener('click', (e) => {

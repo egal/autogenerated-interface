@@ -1,18 +1,22 @@
 <template>
-  <div>
+  <div v-if="!editMode">
     <div v-if="Array.isArray(item) && item.length">
       <div v-for="cell in item" :key="cell">
         <span>{{ cell }}</span>
       </div>
     </div>
-    <div v-else-if="Array.isArray(item) && !item.length">
-      <span>-</span>
-    </div>
     <div v-else>
-      {{ item }}
+      <span>{{ item }} </span>
     </div>
-    <TableWidget></TableWidget>
   </div>
+  <div v-if="editMode">
+    <input
+      type="text"
+      v-model="updatedCell"
+      @input="$emit('input', { key: this.fieldPath, item: $event.target.value })"
+    />
+  </div>
+  <TableWidget></TableWidget>
 </template>
 
 <script>
@@ -23,7 +27,11 @@ export default {
     TableWidget,
   },
   data() {
-    return {}
+    return {
+      updatedCell: this.item,
+      showInput: false,
+      selectedItem: this.item,
+    }
   },
   props: {
     item: {
@@ -38,7 +46,13 @@ export default {
       type: String,
       default: '',
     },
+    editMode: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ['input'],
+  methods: {},
 }
 </script>
 

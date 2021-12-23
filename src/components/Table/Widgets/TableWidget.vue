@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'TableItem',
+  name: 'TableWidget',
   props: {
     type: {
       type: String,

@@ -4,61 +4,54 @@
       :item="renderTableCell(item, field)"
       :type="field.type"
       :fieldPath="field.path"
+      :edit-mode="editMode"
+      @input="(value) => setEditItem(value)"
     ></TableCell>
   </td>
-  <div class="item-options-container" v-if="showOptions" @mouseleave="showOptions = false">
-    <button class="edit-btn" @click="openModal(item, 'edit')">
-      <i class="bx bx-edit-alt" />Edit
-    </button>
-    <button class="delete-btn" @click="openModal(item.id, 'delete')">
-      <i class="bx bx-trash" />Delete
-    </button>
-  </div>
-
-  <!--  <div class="row-container">-->
-  <!--    <div class="row-content">-->
-  <!--      <div class="table-cell" v-for="rowItem in item" :key="rowItem.id">-->
-  <!--        <TableCell :item="rowItem"></TableCell>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--    <div class="item-options-container" v-if="showOptions">-->
-  <!--      <button class="edit-btn"><i class="bx bx-edit-alt" />Edit</button>-->
-  <!--      <button class="delete-btn"><i class="bx bx-trash" />Delete</button>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </template>
 
 <script>
 import TableCell from '@/components/Table/TableCell'
 import { format } from 'date-fns'
+import { tableStore } from '@/storage/TableStore'
 export default {
   name: 'TableRow',
   components: { TableCell },
   props: {
-    fields: {
-      type: Array,
-      default: () => [],
-    },
+    // fields: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     item: {
       type: Object,
       default: undefined,
+    },
+    editMode: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
       showOptions: false,
       selected: [],
+      itemRow: this.item,
+      itemToUpdate: this.item,
+      fields: tableStore.getState().tableData.fields,
     }
-  },
-  mounted() {
-    this.emitter.on('open-options', (id) => {
-      if (this.item.id === id) {
-        this.showOptions = !this.showOptions
-      }
-    })
   },
   computed: {},
   methods: {
+    setEditItem(value) {
+      let valueKey = value.key
+      let valueItem = value.item
+      Object.entries(this.itemToUpdate).forEach(([key, value]) => {
+        if (valueKey === key) {
+          this.itemToUpdate[key] = valueItem
+          tableStore.setSelectedItem(this.itemToUpdate)
+        }
+      })
+    },
     renderTableCell(item, field) {
       let fieldKey = []
       let valuesArr = []
@@ -87,6 +80,8 @@ export default {
                     for (let i in nestedArr) {
                       valuesArr.push(nestedArr[i][field.key[1]])
                     }
+                  } else {
+                    return '-'
                   }
                 }
               }
@@ -105,13 +100,6 @@ export default {
     },
     formatDate(item, field) {
       return format(new Date(item), field.computed.format)
-    },
-    openModal(id, actionName) {
-      if (actionName === 'edit') {
-        this.emitter.emit('open-edit-modal', id)
-      } else {
-        this.emitter.emit('open-delete-modal', id)
-      }
     },
   },
 }

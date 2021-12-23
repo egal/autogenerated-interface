@@ -1,7 +1,6 @@
 <template>
   <div class="pagination">
     <div class="pagination-controls">
-      {{ currentPage }}
       <button class="pagination-controls__first-page" @click="firstPage">
         <img :src="require('./assets/double-arrow-left.svg')" />
       </button>

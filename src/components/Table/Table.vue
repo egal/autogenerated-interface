@@ -22,27 +22,12 @@
       <label for="custom-checkbox">Выбрать все</label>
     </div>
     <div class="table-row-controls">
-      <button class="delete-all-btn" v-if="selectAll">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          role="img"
-          width="1em"
-          height="1em"
-          preserveAspectRatio="xMidYMid meet"
-          viewBox="0 0 32 32"
-        >
-          <path d="M12 12h2v12h-2z" fill="#688BB6" />
-          <path d="M18 12h2v12h-2z" fill="#688BB6" />
-          <path
-            d="M4 6v2h2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8h2V6zm4 22V8h16v20z"
-            fill="#688BB6"
-          />
-          <path d="M12 2h8v2h-8z" fill="#688BB6" /></svg
-        >Удалить все
+      <button class="delete-all-btn" v-if="selectAll" @click="deleteItems">
+        <img :src="require('./assets/delete2.svg')" />
+        <span>Удалить все</span>
       </button>
     </div>
-    <slot name="controls"> </slot>
+    <slot name="controls"></slot>
   </div>
   <div :style="cssVars" :class="{ 'card-container': card, 'table-container': !card }">
     <div class="filter-container">
@@ -54,33 +39,57 @@
       <table>
         <thead>
           <tr v-if="!isLoading">
-            <th class="checkbox-container" v-if="!isLoading">
-              <!--              <input-->
-              <!--                class="custom-checkbox"-->
-              <!--                type="checkbox"-->
-              <!--                name="custom-checkbox"-->
-              <!--                id="custom-checkbox"-->
-              <!--                v-model="selectAll"-->
-              <!--              />-->
-              <!--              <label for="custom-checkbox"></label>-->
-            </th>
+            <th class="checkbox-container" v-if="!isLoading"></th>
             <th v-for="(header, index) in tableData?.headers" :key="index">
-              {{ header.label }}
-              <button @click="sortItems(header)">
-                <i
-                  class="bx bx-sort-alt-2"
-                  id="btn-default"
-                  v-if="header.sortable && (order !== 'desc' || order !== 'asc')"
-                ></i>
-              </button>
+              <div class="table-header">
+                <span>{{ header.label }}</span>
+                <button v-if="header.sortable">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 477.175 477.175"
+                    xml:space="preserve"
+                    class="sort-asc"
+                    :fill="cssConfig.headerColor"
+                    @click="sortItems(header, 'asc')"
+                  >
+                    <g>
+                      <path
+                        d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225
+            		c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z"
+                      />
+                    </g>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 477.175 477.175"
+                    xml:space="preserve"
+                    class="sort-desc"
+                    :fill="cssConfig.headerColor"
+                    @click="sortItems(header, 'desc')"
+                  >
+                    <g>
+                      <path
+                        d="M360.731,229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l215.5,215.5l-215.5,215.5
+            		c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-4l225.1-225.1C365.931,242.875,365.931,234.275,360.731,229.075z
+            		"
+                      />
+                    </g>
+                  </svg>
+                </button>
+              </div>
             </th>
+            <th class="row-options-container" v-if="!isLoading"></th>
           </tr>
           <div v-else-if="isLoading" class="skeletor-container">
             <Skeletor width="180px" height="30px" v-for="i in 5" :key="i" />
           </div>
         </thead>
         <tbody v-if="!isLoading">
-          <tr v-for="item in tableData.items" :key="item.id">
+          <tr v-for="item in tableData.items || []" :key="item.id">
             <td class="checkbox-container">
               <input
                 class="custom-checkbox"
@@ -92,10 +101,22 @@
               />
               <label :for="item.id"></label>
             </td>
-            <TableRow :item="item" :fields="tableData && tableData.fields"></TableRow>
-            <button @click="toggleOptionsMenu(item.id)" class="options-btn">
-              <i class="bx bx-dots-horizontal-rounded" />
-            </button>
+            <TableRow :item="item" :edit-mode="selectedRow === item.id ? true : false"></TableRow>
+            <div class="item-options-container" v-if="editable">
+              <button
+                class="edit-btn"
+                @click="switchToEditMode(item)"
+                v-if="selectedRow !== item.id"
+              >
+                <img :src="require('./assets/edit.svg')" />
+              </button>
+              <button class="save-edit-btn" @click="saveEdit()" v-if="selectedRow === item.id">
+                <img :src="require('./assets/tick.svg')" />
+              </button>
+              <button class="delete-btn" @click="openDeleteModal(item)">
+                <img :src="require('./assets/delete2.svg')" />
+              </button>
+            </div>
           </tr>
         </tbody>
         <div v-else-if="isLoading" class="body-skeletor-container">
@@ -104,8 +125,12 @@
       </table>
     </div>
     <div v-if="card" class="cards-content">
-      <div v-for="item in tableData.items" :key="item.id" class="card-content">
-        <TableCard :item="item" :headers="tableData.headers" :isLoading="isLoading"></TableCard>
+      <div v-for="cardItem in tableData.items || []" :key="cardItem.id" class="card-content">
+        <TableCard
+          :cardDtem="cardItem"
+          :headers="tableData.headers"
+          :isLoading="isLoading"
+        ></TableCard>
       </div>
     </div>
     <div class="table-footer" v-if="!isLoading">
@@ -123,12 +148,18 @@
       </slot>
     </div>
     <TableModal @close="toggleModal" :modalActive="modalActive">
-      <template v-slot:modalContent>
-        <slot name="modalInfo">
-          <!--          <div class="modal-content">-->
-          <!--            <h1>This is a Modal Header</h1>-->
-          <!--            <p>This is a modal message</p>-->
-          <!--          </div>-->
+      <template v-slot:innerModalContent>
+        <slot name="modalContent">
+          <TableModalContent
+            :edit-modal="editModal"
+            :delete-modal="deleteModal"
+            :delete-many-modal="deleteManyModal"
+            :item-id="modalItemId"
+            :delete-many-ids="idsForDeletion"
+            :cancel-btn-text="cancelBtnText"
+            :confirm-btn-text="confirmBtnText"
+            :delete-modal-text="deleteModalText"
+          ></TableModalContent>
         </slot>
       </template>
     </TableModal>
@@ -136,6 +167,7 @@
       {{ noReplayMessage }}
     </div>
   </div>
+  <Toaster></Toaster>
 </template>
 
 <script>
@@ -149,10 +181,23 @@ import { tableMetadata } from '@/components/Table/assets/tableMetadata'
 import TableModal from '@/components/Table/TableModal'
 import 'vue-skeletor/dist/vue-skeletor.css'
 import { Skeletor } from 'vue-skeletor'
-
+import TableModalContent from '@/components/Table/TableModalContent'
+import { tableStore } from '@/storage/TableStore'
+import { ToasterClass } from '../Toaster/ToasterClass'
+import Toaster from '@/components/Toaster/Toaster'
+let ToasterInst = new ToasterClass()
 export default {
   name: 'Table',
-  components: { TableModal, TableCard, Pagination, Filters, TableRow, Skeletor },
+  components: {
+    Toaster,
+    TableCard,
+    Pagination,
+    Filters,
+    TableRow,
+    Skeletor,
+    TableModal,
+    TableModalContent,
+  },
   props: {
     microserviceName: {
       type: String,
@@ -178,9 +223,17 @@ export default {
       type: Function,
       default: () => this.initTable(),
     },
+    editable: {
+      type: Boolean,
+      default: true,
+    },
     noReplayMessage: {
       type: String,
       default: 'Нет ответа от сервера!',
+    },
+    modalComponent: {
+      type: [String, Object],
+      default: 'TableModalComponent',
     },
     cssConfig: {
       type: Object,
@@ -204,17 +257,39 @@ export default {
         tableRowHover: '#f0f6f9',
       }),
     },
+    cancelBtnText: {
+      type: String,
+      default: 'Отмена',
+    },
+    confirmBtnText: {
+      type: String,
+      default: 'Подтвердить',
+    },
+    deleteModalText: {
+      type: String,
+      default: 'Подтвердите удаление записи',
+    },
   },
   data() {
     return {
+      tableItemsMock: items,
+      tableMetaMock: tableMetadata,
       table: {},
       card: false,
       optionsId: '',
-      order: '',
+      order: undefined,
+      orderBy: undefined,
       hover: false,
       modalActive: false,
       isLoading: false,
       noReplay: false,
+      editModal: false,
+      deleteModal: false,
+      deleteManyModal: false,
+      modalItemId: null,
+      rowEditMode: false,
+      selectedRow: null,
+      idsForDeletion: [],
       currentPage: 1,
       perPage: 10,
       selected: [],
@@ -231,12 +306,12 @@ export default {
   mounted() {
     this.isLoading = true
     this.getMetadata()
-    this.emitter.on('open-edit-modal', (item) => {
-      this.emitter.emit('edit-modal', item)
-      this.modalActive = true
-    })
     this.emitter.on('close', () => {
       this.modalActive = false
+    })
+    this.emitter.on('delete-item', () => {
+      this.modalActive = false
+      this.deleteItem()
     })
     this.currentPage =
       this.$cookies.get('currentPage') && this.$cookies.get('currentPage').length
@@ -284,6 +359,49 @@ export default {
     },
   },
   methods: {
+    saveEdit() {
+      this.selectedRow = ''
+      constructor
+        .update(this.microserviceName, this.modelName, tableStore.getState().selectedItem)
+        .call()
+        .then((data) => {
+          ToasterInst.success(data.message)
+        })
+        .catch((error) => {
+          ToasterInst.success(error.message)
+        })
+    },
+    openDeleteModal(item) {
+      this.modalActive = true
+      this.deleteModal = true
+      this.modalItemId = item.id
+    },
+    switchToEditMode(item) {
+      this.selectedRow = item.id
+      tableStore.setSelectedItem(item)
+    },
+    deleteItem() {
+      constructor
+        .delete(this.microserviceName, this.modelName, { id: this.modalItemId })
+        .call()
+        .then((data) => {
+          ToasterInst.success(data.message)
+        })
+        .catch((error) => {
+          ToasterInst.error(error)
+        })
+    },
+    deleteItems() {
+      constructor
+        .custom(this.microserviceName, this.modelName, 'deleteMany', { ids: this.selected })
+        .call()
+        .then((data) => {
+          ToasterInst.success(data.message)
+        })
+        .catch((error) => {
+          ToasterInst.error(error.error)
+        })
+    },
     setCurrentPage(currentPage = this.currentPage, perPage = this.perPage) {
       this.currentPage = currentPage
       this.perPage = perPage
@@ -299,6 +417,7 @@ export default {
         this.tableData.headers.push({
           label: fields[field].label,
           field: fields[field],
+          sortable: fields[field].sortable,
         })
         let path = fields[field].path.split('.')
         for (let i in path) {
@@ -314,6 +433,7 @@ export default {
           computed: fields[field].computed,
         })
       })
+      tableStore.setTableData(this.tableData)
       this.isLoading = false
     },
     getMetadata() {
@@ -325,21 +445,20 @@ export default {
           this.tableMetadata = data[this.tableName]
           const initCurrentPage = this.$cookies.get('currentPage') || 1
           const initPerPage = this.$cookies.get('perPage') || 10
-
           this.getItems(+initCurrentPage, +initPerPage)
         })
         .catch((error) => {
           this.isLoading = false
         })
     },
-    getItems(currentPage, perPage = this.perPage, filter, withs, orders) {
-      this.$cookies.set('currentPage', Number(currentPage))
-      this.$cookies.set('perPage', Number(perPage))
+    getItems(currentPage, perPage, filter, withs) {
+      this.$cookies.set('currentPag', Number(currentPage))
+      this.$cookies.set('perPage', perPage)
       const filters = []
       const ordersArr = []
       ordersArr.push(
-        orders && orders.length
-          ? orders
+        typeof this.orderBy !== 'undefined' && typeof this.order !== 'undefined'
+          ? [this.orderBy, this.order]
           : this.tableMetadata.order.length
           ? this.tableMetadata.order
           : undefined,
@@ -361,14 +480,9 @@ export default {
           this.totalCount = data.total_count
           this.tableItems = data.items
           if (this.tableMetadata && !this.tableData.headers.length) {
-            console.log('init')
             this.initTable()
           } else if (this.tableMetadata && this.tableItems) {
-            console.log('else')
-            console.log(this.tableData.items)
-            console.log(this.tableItems)
             this.tableData.items = this.tableItems
-            console.log(this.tableData.items)
             this.isLoading = false
           }
         })
@@ -376,15 +490,18 @@ export default {
           this.isLoading = false
         })
     },
-    sortItems(header) {
-      console.log(header)
+    sortItems(header, order) {
+      if (header.field.path.includes('[]')) {
+        this.orderBy = header.field.path.replace(/[[-]]/, '')
+      } else {
+        this.orderBy = header.field.path
+      }
+      this.order = order
+      this.getItems()
     },
     checkboxToggle() {
-      console.log('checkbox toggle', this.card)
+      console.log(this.tableData, this.card)
       this.card = !this.card
-    },
-    toggleOptionsMenu(id) {
-      this.emitter.emit('open-options', id)
     },
   },
 }

@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 import mitt from 'mitt'
 import VueCookies from 'vue3-cookies'
-const emitter = mitt()
+export const emitter = mitt()
 const app = createApp(App)
 app.use(VueCookies)
 app.config.globalProperties.emitter = emitter
 app.directive('click-outside', {
-  beforeMount(el, binding, vnode) {
+  beforeMount(el, binding) {
     el.clickOutsideEvent = function (event: any) {
       if (!(el === event.target || el.contains(event.target))) {
         binding.value(event, el)
