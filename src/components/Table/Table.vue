@@ -89,7 +89,7 @@
           </div>
         </thead>
         <tbody v-if="!isLoading">
-          <tr v-for="item in tableData.items || []" :key="item.id">
+          <tr v-for="(item, index) in (tableData && tableData.items) || []" :key="index">
             <td class="checkbox-container">
               <input
                 class="custom-checkbox"
@@ -125,9 +125,13 @@
       </table>
     </div>
     <div v-if="card" class="cards-content">
-      <div v-for="cardItem in tableData.items || []" :key="cardItem.id" class="card-content">
+      <div
+        v-for="(cardItem, index) in (tableData && tableData.items) || []"
+        :key="index"
+        class="card-content"
+      >
         <TableCard
-          :cardDtem="cardItem"
+          :cardItem="cardItem"
           :headers="tableData.headers"
           :isLoading="isLoading"
         ></TableCard>
@@ -167,7 +171,10 @@
       {{ noReplayMessage }}
     </div>
   </div>
-  <Toaster></Toaster>
+  <Toaster :theme="this.toasterTheme"></Toaster>
+  <ToasterItem
+    :data="{ message: 'toaster message', variant: 'success', duration: 20000000000 }"
+  ></ToasterItem>
 </template>
 
 <script>
@@ -185,18 +192,20 @@ import TableModalContent from '@/components/Table/TableModalContent'
 import { tableStore } from '@/storage/TableStore'
 import { ToasterClass } from '../Toaster/ToasterClass'
 import Toaster from '@/components/Toaster/Toaster'
+import ToasterItem from '@/components/Toaster/ToasterItem'
 let ToasterInst = new ToasterClass()
 export default {
   name: 'Table',
   components: {
     Toaster,
     TableCard,
+    TableRow,
     Pagination,
     Filters,
-    TableRow,
     Skeletor,
     TableModal,
     TableModalContent,
+    ToasterItem,
   },
   props: {
     microserviceName: {
@@ -269,6 +278,14 @@ export default {
       type: String,
       default: 'Подтвердите удаление записи',
     },
+    mainFont: {
+      type: String,
+      default: 'Open Sans',
+    },
+    toasterTheme: {
+      type: String,
+      default: 'light',
+    },
   },
   data() {
     return {
@@ -324,6 +341,18 @@ export default {
         : this.perPage
   },
   computed: {
+    fontFamily() {
+      switch (this.mainFont) {
+        case 'Raleway':
+          return 'Raleway'
+        case 'Inter':
+          return 'Inter'
+        case 'Open Sans':
+          return 'Open Sans'
+        default:
+          return 'Open Sans'
+      }
+    },
     cssVars() {
       return {
         '--dark-color': this.cssConfig.mainDarkColor,
@@ -341,6 +370,7 @@ export default {
         '--bold-box-shadow': this.cssConfig.boldBoxShadow,
         '--main-border-radius': this.cssConfig.mainBorderRadius,
         '--table-row-hover-background': this.cssConfig.tableRowHover,
+        '--main-font': this.fontFamily,
       }
     },
     selectAll: {
@@ -449,11 +479,12 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false
+          ToasterInst.error(error.error)
         })
     },
     getItems(currentPage, perPage, filter, withs) {
       this.$cookies.set('currentPag', Number(currentPage))
-      this.$cookies.set('perPage', perPage)
+      this.$cookies.set('perPage', Number(perPage))
       const filters = []
       const ordersArr = []
       ordersArr.push(
@@ -483,10 +514,12 @@ export default {
             this.initTable()
           } else if (this.tableMetadata && this.tableItems) {
             this.tableData.items = this.tableItems
+            tableStore.setTableData(this.tableData)
             this.isLoading = false
           }
         })
         .catch((error) => {
+          ToasterInst.error(error.error)
           this.isLoading = false
         })
     },
@@ -500,7 +533,6 @@ export default {
       this.getItems()
     },
     checkboxToggle() {
-      console.log(this.tableData, this.card)
       this.card = !this.card
     },
   },

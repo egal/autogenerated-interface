@@ -11,6 +11,7 @@
     :table-name="tableName"
     :url="url"
     :css-config="mainCssConfig"
+    :main-font="'Inter'"
   >
     <!--    <template v-slot:modalContent>-->
     <!--      <h1>hui</h1>-->

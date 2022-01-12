@@ -11,28 +11,31 @@
 @mixin toaster($variant: 'danger') {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  //display: grid;
-  //grid-template-columns: 48px 1fr 16px;
+  justify-content: space-between;
   cursor: pointer;
-  //align-items: center;
-  //grid-column-gap: 16px;
-  padding: 16px;
-  background-color: map-get($dark-colors, $variant);
-  border-radius: 10px;
+  padding: 16px 20px 16px 16px;
+  //background-color: map-get($main-colors, $variant);
+  border-radius: $all-sides-large;
   width: fit-content;
   min-width: 480px;
   min-height: 80px;
   height: auto;
   transform: translateY(10px);
   animation: fadeInDown 0.2s ease-in-out;
-
+.toaster-content {
+  display: flex;
+  .toaster-icon {
+    svg {
+      align-self: center;
+      color: map-get($main-colors, $variant);;
+    }
+  }
   .toaster-message {
-    color: white;
     font-size: 16px;
-    line-height: 23px;
     font-weight: bold;
   }
+}
+
   .toaster-close {
     transform: translateY(1px);
   }
@@ -64,4 +67,11 @@
 
 .slide-leave-to {
   animation: fadeOut 0.5s;
+}
+
+.light {
+background: $base-white;
+  .toaster-message {
+    color:
+  }
 }

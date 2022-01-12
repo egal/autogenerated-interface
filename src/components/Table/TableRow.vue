@@ -18,10 +18,6 @@ export default {
   name: 'TableRow',
   components: { TableCell },
   props: {
-    // fields: {
-    //   type: Array,
-    //   default: () => [],
-    // },
     item: {
       type: Object,
       default: undefined,
@@ -53,6 +49,7 @@ export default {
       })
     },
     renderTableCell(item, field) {
+      console.log(field, 'field')
       let fieldKey = []
       let valuesArr = []
       let fieldPath

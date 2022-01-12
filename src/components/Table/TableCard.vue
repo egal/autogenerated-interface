@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="card-items">
-      <div v-for="cardItem in item" :key="cardItem.id">
+      <div v-for="item in cardItem" :key="item.id">
         {{ cardItem }}
       </div>
     </div>

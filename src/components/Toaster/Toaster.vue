@@ -7,7 +7,12 @@
         :key="toaster.id"
         :style="`transform: ${getPosition(toaster.id)}`"
       >
-        <ToasterItem :data="toaster" @close="close(toaster.id)" :position="position" />
+        <ToasterItem
+          :data="toaster"
+          :theme="theme"
+          @close="close(toaster.id)"
+          :position="position"
+        />
       </div>
     </div>
   </transition>
@@ -23,6 +28,14 @@ export default {
     position: {
       type: String,
       default: 'top-left',
+    },
+    variant: {
+      type: String,
+      default: 'light',
+    },
+    theme: {
+      type: String,
+      default: 'light',
     },
   },
   data() {
